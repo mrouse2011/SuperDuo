@@ -2,53 +2,53 @@
 <items version="2" >
 
     <item
+        jar="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/jacoco/jacocoagent.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="05d4f9e6f36f58a60dc65a4b1af30ee76201a530">
+        <dex dex="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/pre-dexed/debug/jacocoagent-b934d96957de7d6a4ef1a63a9409b37b05b6fcee.jar" />
+    </item>
+    <item
+        jar="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/exploded-aar/com.journeyapps/zxing-android-embedded/3.0.2/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="744a4b394a9a7db8a4c4680836d8544802a9cd64">
+        <dex dex="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/pre-dexed/debug/classes-9fd0d722e18e93ecd3aa8e1dc1e8c6ab6315cb0b.jar" />
+    </item>
+    <item
+        jar="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/jars/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/pre-dexed/debug/classes-ab75c0897525558f736011d00f0325b076bd6217.jar" />
+    </item>
+    <item
+        jar="/Applications/adt-bundle-mac-x86_64-20140702/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-6658c117293958a7383bcbb346a57fefebf27ee4.jar" />
+    </item>
+    <item
+        jar="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/jars/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-f73384a18edc01f72e1d9d5ff465c2ad5785efe9.jar" />
+    </item>
+    <item
         jar="/Users/marlonrouse/.gradle/caches/modules-2/files-2.1/com.google.zxing/core/3.2.0/e019d15a13a9786f881141d2df6654b8510bce8b/core-3.2.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="e019d15a13a9786f881141d2df6654b8510bce8b">
-        <dex dex="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/pre-dexed/debug/core-3.2.0-9cc2bec3d7ef5560ccdfc3b39fa16ee613793da4.jar" />
+        <dex dex="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/pre-dexed/debug/core-3.2.0-9cc2bec3d7ef5560ccdfc3b39fa16ee613793da4.jar" />
     </item>
     <item
-        jar="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
-        <dex dex="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-d47b6267223e87a752c51924fcc15bdb8e460546.jar" />
-    </item>
-    <item
-        jar="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
-        <dex dex="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/pre-dexed/debug/classes-e19849eb7ff6d17751d31d673cead7f6d198f333.jar" />
-    </item>
-    <item
-        jar="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jar="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/jars/classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/pre-dexed/debug/classes-37c4bd00e6470382904f9b124a96f5decc19e146.jar" />
-    </item>
-    <item
-        jar="/Users/marlonrouse/Documents/adt-bundle-mac-x86_64-20140702/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
-        <dex dex="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-7ff2a5bf6cba36357eff2140370c41982a90f525.jar" />
-    </item>
-    <item
-        jar="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/exploded-aar/com.journeyapps/zxing-android-embedded/3.0.2/classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="744a4b394a9a7db8a4c4680836d8544802a9cd64">
-        <dex dex="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/pre-dexed/debug/classes-8669d0967cf0ea2e481f48e28f256ea6680ba2db.jar" />
-    </item>
-    <item
-        jar="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/jacoco/jacocoagent.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="05d4f9e6f36f58a60dc65a4b1af30ee76201a530">
-        <dex dex="/Users/marlonrouse/AndroidStudioProjects/alexandria/app/build/intermediates/pre-dexed/debug/jacocoagent-f7755bafdd735c5a0429711d6a59d0dad02cb625.jar" />
+        <dex dex="/Users/marlonrouse/Desktop/AndroidStudioProjects/UdacityProject3/alexandria/app/build/intermediates/pre-dexed/debug/classes-d30c85c0e0859a44bf528988ab3f03885104693a.jar" />
     </item>
 
 </items>
