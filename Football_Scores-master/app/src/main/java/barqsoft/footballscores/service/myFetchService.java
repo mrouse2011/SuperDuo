@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
@@ -18,12 +19,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
 
 import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.R;
+import barqsoft.footballscores.WidgetMatch;
 
 /**
  * Created by yehya khaled on 3/2/2015.
@@ -36,6 +39,14 @@ public class myFetchService extends IntentService
         super("myFetchService");
     }
 
+    private static final String [] SCORES_COLUMNS = {
+            DatabaseContract.scores_table.HOME_COL,
+            DatabaseContract.scores_table.AWAY_COL,
+            DatabaseContract.scores_table.HOME_GOALS_COL,
+            DatabaseContract.scores_table.AWAY_GOALS_COL,
+            DatabaseContract.scores_table.TIME_COL,
+    };
+
     @Override
     protected void onHandleIntent(Intent intent)
     {
@@ -45,8 +56,56 @@ public class myFetchService extends IntentService
         return;
     }
 
+    public boolean compareWithNow(String matchTime) {
+        int now_hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        int match_hour = Integer.parseInt(matchTime.substring(0, matchTime.indexOf(':')));
+
+        Log.i("hr/hr", String.valueOf(now_hour) + " / " + String.valueOf(match_hour));
+
+        int timeDiff = now_hour - match_hour;
+        boolean playedYet = match_hour <= now_hour ;
+        if (timeDiff <= 3 && timeDiff >= 0 && playedYet)
+            return true;
+        else
+            return false;
+    }
+
     private void getData (String timeFrame)
     {
+        Intent intent = new Intent("android.intent.action.GET_DATA_CALLED");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar cal = Calendar.getInstance();
+//        cal.add(Calendar.DAY_OF_MONTH, 1);
+
+        final String dateString = sdf.format(cal.getTime());
+        Uri scoreWithDateUri = DatabaseContract.scores_table.buildScoreWithDate();
+        Cursor data = getContentResolver().query(scoreWithDateUri,SCORES_COLUMNS,null,
+                new String[] { dateString }, DatabaseContract.scores_table.HOME_GOALS_COL + " ASC");
+        if (data.moveToFirst()) {
+            WidgetMatch match = null;
+            while (!data.isAfterLast()) {
+                boolean stillPlaying = compareWithNow(data.getString(4));
+                if (data.getString(2).equals("-1")) {
+                    //match hasnt started
+                } else if (stillPlaying) {
+                    //first match thats started and still playing (now-starttime<=90min)
+                    match = new WidgetMatch(data.getString(0), data.getString(1), data.getString(2),
+                            data.getString(3), data.getString(4));
+                    break;
+                } else {
+                    // match already finished
+                }
+                data.moveToNext();
+            }
+            if (match!=null) {
+                intent.putExtra("the_match", match);
+                Log.i("FETCHSERVICE", "sending broadcast");
+                sendBroadcast(intent);
+            }
+        }
+        data.close();
+
         //Creating fetch URL
         final String BASE_URL = "http://api.football-data.org/alpha/fixtures"; //Base URL
         final String QUERY_TIME_FRAME = "timeFrame"; //Time Frame parameter to determine days
@@ -54,7 +113,7 @@ public class myFetchService extends IntentService
 
         Uri fetch_build = Uri.parse(BASE_URL).buildUpon().
                 appendQueryParameter(QUERY_TIME_FRAME, timeFrame).build();
-        //Log.v(LOG_TAG, "The url we are looking at is: "+fetch_build.toString()); //log spam
+        Log.v(LOG_TAG, "The url we are looking at is: "+fetch_build.toString()); //log spam
         HttpURLConnection m_connection = null;
         BufferedReader reader = null;
         String JSON_data = null;
@@ -115,10 +174,9 @@ public class myFetchService extends IntentService
                 if (matches.length() == 0) {
                     //if there is no data, call the function on dummy data
                     //this is expected behavior during the off season.
-                    processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
+//                    processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
                     return;
                 }
-
 
                 processJSONdata(JSON_data, getApplicationContext(), true);
             } else {
@@ -147,6 +205,8 @@ public class myFetchService extends IntentService
         final String PRIMERA_LIGA = "402";
         final String Bundesliga3 = "403";
         final String EREDIVISIE = "404";
+        final String CHAMPIONS2015_2016 = "405";
+//        final String DUMMYLEAGUE = "357";
 
 
         final String SEASON_LINK = "http://api.football-data.org/alpha/soccerseasons/";
@@ -194,8 +254,16 @@ public class myFetchService extends IntentService
                 // If it doesn't, that can cause an empty DB, bypassing the dummy data routine.
                 if(     League.equals(PREMIER_LEAGUE)      ||
                         League.equals(SERIE_A)             ||
+                        League.equals(LIGUE1)              ||
+                        League.equals(LIGUE2)              ||
+                        League.equals(SEGUNDA_DIVISION)    ||
                         League.equals(BUNDESLIGA1)         ||
                         League.equals(BUNDESLIGA2)         ||
+                        League.equals(PRIMERA_LIGA)        ||
+                        League.equals(Bundesliga3)         ||
+                        League.equals(EREDIVISIE)          ||
+                        League.equals(CHAMPIONS2015_2016)  ||
+                        //League.equals(DUMMYLEAGUE)         ||
                         League.equals(PRIMERA_DIVISION)     )
                 {
                     match_id = match_data.getJSONObject(LINKS).getJSONObject(SELF).
@@ -264,8 +332,13 @@ public class myFetchService extends IntentService
             values.toArray(insert_data);
             inserted_data = mContext.getContentResolver().bulkInsert(
                     DatabaseContract.BASE_CONTENT_URI,insert_data);
+            /*
+            Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
 
-            //Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
+            for (ContentValues cvals: values) {
+                Log.d("CVALS", cvals.toString());
+            }
+            */
         }
         catch (JSONException e)
         {
