@@ -56,52 +56,35 @@ public class myFetchService extends IntentService
         return;
     }
 
-    public boolean compareWithNow(String matchTime) {
-        int now_hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        int match_hour = Integer.parseInt(matchTime.substring(0, matchTime.indexOf(':')));
-
-        Log.i("hr/hr", String.valueOf(now_hour) + " / " + String.valueOf(match_hour));
-
-        int timeDiff = now_hour - match_hour;
-        boolean playedYet = match_hour <= now_hour ;
-        if (timeDiff <= 3 && timeDiff >= 0 && playedYet)
-            return true;
-        else
-            return false;
-    }
-
     private void getData (String timeFrame)
     {
-        Intent intent = new Intent("android.intent.action.GET_DATA_CALLED");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+        /*
+        String timeString = new SimpleDateFormat("yyyy-MM-dd:HH:mm").format(Calendar.getInstance().getTime());
         Calendar cal = Calendar.getInstance();
-//        cal.add(Calendar.DAY_OF_MONTH, 1);
-
-        final String dateString = sdf.format(cal.getTime());
+        cal.add(Calendar.MINUTE, 90);
+        String timePlus90Min = new SimpleDateFormat("yyyy-MM-dd:HH:mm").format(cal.getTime());
+        */
+        String todayString = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
         Uri scoreWithDateUri = DatabaseContract.scores_table.buildScoreWithDate();
-        Cursor data = getContentResolver().query(scoreWithDateUri,SCORES_COLUMNS,null,
-                new String[] { dateString }, DatabaseContract.scores_table.HOME_GOALS_COL + " ASC");
+        Cursor data = getContentResolver().query(scoreWithDateUri, SCORES_COLUMNS, null,
+                new String[] { todayString }, DatabaseContract.scores_table.TIME_COL + " ASC");
         if (data.moveToFirst()) {
-            WidgetMatch match = null;
             while (!data.isAfterLast()) {
-                boolean stillPlaying = compareWithNow(data.getString(4));
+                Log.i("match started or not", data.getString(2));
                 if (data.getString(2).equals("-1")) {
-                    //match hasnt started
-                } else if (stillPlaying) {
-                    //first match thats started and still playing (now-starttime<=90min)
-                    match = new WidgetMatch(data.getString(0), data.getString(1), data.getString(2),
-                            data.getString(3), data.getString(4));
-                    break;
+                    // match hasnt started
                 } else {
-                    // match already finished
+                    // show in widget first match today thats started - manually updated in time hopefully
+                    // to be read as occurring today in local timezone
+                    WidgetMatch match = new WidgetMatch(data.getString(0), data.getString(1), data.getString(2),
+                            data.getString(3), data.getString(4));
+                    Intent intent = new Intent("android.intent.action.GET_DATA_CALLED");
+                    intent.putExtra("the_match", match);
+                    Log.i("FETCHSERVICE", "sending broadcast");
+                    sendBroadcast(intent);
+                    break;
                 }
                 data.moveToNext();
-            }
-            if (match!=null) {
-                intent.putExtra("the_match", match);
-                Log.i("FETCHSERVICE", "sending broadcast");
-                sendBroadcast(intent);
             }
         }
         data.close();

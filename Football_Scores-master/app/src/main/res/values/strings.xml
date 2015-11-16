@@ -21,6 +21,10 @@
     <string name="final_text">Final</string>
     <string name="share_text">Share</string>
     <string name="about">About</string>
+    <string name="no_text"></string>
+    <string name="team_1_no_text">Team 1</string>
+    <string name="team_2_no_text">Team 2</string>
+    <string name="dash_text"> - </string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="about_text">
         This Application get Football Matches Score for the Premier League,Seria A,Bundesliga,Primera Division

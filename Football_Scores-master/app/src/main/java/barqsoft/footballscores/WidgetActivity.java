@@ -13,7 +13,6 @@ import android.widget.RemoteViews;
 public class WidgetActivity extends AppWidgetProvider {
 
     public static WidgetMatch match;
-    public static int matchNumber;
 
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,int[] appWidgetIds) {
         if (match != null) {
