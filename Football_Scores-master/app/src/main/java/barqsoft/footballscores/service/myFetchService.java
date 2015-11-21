@@ -58,29 +58,25 @@ public class myFetchService extends IntentService
 
     private void getData (String timeFrame)
     {
-        /*
-        String timeString = new SimpleDateFormat("yyyy-MM-dd:HH:mm").format(Calendar.getInstance().getTime());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.MINUTE, 90);
-        String timePlus90Min = new SimpleDateFormat("yyyy-MM-dd:HH:mm").format(cal.getTime());
-        */
-        String todayString = new SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().getTime());
+        // uncomment to test for a day with matches
+        // cal.add(Calendar.DAY_OF_YEAR, -1);
+        String matchDayString = sdf.format(cal.getTime());
+
         Uri scoreWithDateUri = DatabaseContract.scores_table.buildScoreWithDate();
         Cursor data = getContentResolver().query(scoreWithDateUri, SCORES_COLUMNS, null,
-                new String[] { todayString }, DatabaseContract.scores_table.TIME_COL + " ASC");
+                new String[] { matchDayString }, DatabaseContract.scores_table.TIME_COL + " ASC");
         if (data.moveToFirst()) {
             while (!data.isAfterLast()) {
-                Log.i("match started or not", data.getString(2));
                 if (data.getString(2).equals("-1")) {
                     // match hasnt started
                 } else {
-                    // show in widget first match today thats started - manually updated in time hopefully
-                    // to be read as occurring today in local timezone
+                    // show in widget first match thats started
                     WidgetMatch match = new WidgetMatch(data.getString(0), data.getString(1), data.getString(2),
                             data.getString(3), data.getString(4));
                     Intent intent = new Intent("android.intent.action.GET_DATA_CALLED");
                     intent.putExtra("the_match", match);
-                    Log.i("FETCHSERVICE", "sending broadcast");
                     sendBroadcast(intent);
                     break;
                 }
@@ -157,7 +153,7 @@ public class myFetchService extends IntentService
                 if (matches.length() == 0) {
                     //if there is no data, call the function on dummy data
                     //this is expected behavior during the off season.
-//                    processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
+                    processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
                     return;
                 }
 
@@ -189,7 +185,7 @@ public class myFetchService extends IntentService
         final String Bundesliga3 = "403";
         final String EREDIVISIE = "404";
         final String CHAMPIONS2015_2016 = "405";
-//        final String DUMMYLEAGUE = "357";
+        final String DUMMYLEAGUE = "357";
 
 
         final String SEASON_LINK = "http://api.football-data.org/alpha/soccerseasons/";
@@ -246,7 +242,7 @@ public class myFetchService extends IntentService
                         League.equals(Bundesliga3)         ||
                         League.equals(EREDIVISIE)          ||
                         League.equals(CHAMPIONS2015_2016)  ||
-                        //League.equals(DUMMYLEAGUE)         ||
+                        League.equals(DUMMYLEAGUE)         ||
                         League.equals(PRIMERA_DIVISION)     )
                 {
                     match_id = match_data.getJSONObject(LINKS).getJSONObject(SELF).
