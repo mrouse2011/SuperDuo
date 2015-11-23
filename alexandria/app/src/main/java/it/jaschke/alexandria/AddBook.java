@@ -201,7 +201,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
         String[] authorsArr = null;
         authorsArr = authors.split(",");
         ((TextView) rootView.findViewById(R.id.authors)).setLines(authorsArr.length);
-        if (authorsArr.length!=0) {
+        if (authorsArr.length>0) {
             ((TextView) rootView.findViewById(R.id.authors)).setText(authors.replace(",", "\n"));
         }
         String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
